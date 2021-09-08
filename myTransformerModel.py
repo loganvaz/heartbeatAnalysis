@@ -37,24 +37,13 @@ class PositionalEncodings(layers.Layer):#remembers, thse are sub_classes of laye
         d_model = self.d_model
         #newaxis explicitly makes it column vector
         #it is used to make sure shape is correct
-        """
-        print(np.arange(sequenceLength)[:, np.newaxis])
-        print(np.arange(d_model)[np.newaxis, :])
-        print(d_model)
        
-        print("getting angles")
-        """
         angles = self.get_angles(np.arange(sequenceLength)[:,np.newaxis], np.arange(d_model)[np.newaxis,:], d_model)
         angles[:, 0::2] = np.sin(angles[:, 0::2])
         angles[:, 1::2] = np.cos(angles[:, 1::2])
         #print(angles.shape)
         positionalEncodings = angles[np.newaxis, ...]
-        """
-        print(positionalEncodings.shape)
-        print("input shape")
-        print(inputs.shape)
-        print("add and return")
-        """
+  
         return inputs + tf.cast(positionalEncodings, tf.float32)
 
 
@@ -135,22 +124,7 @@ def model(inputSize, maxLength, embeddingDimensions, num_heads, ff_dim):
 
     x = layers.Dense(64, activation="relu")(x)
     outputs = layers.Dense(8, activation="softmax")(x)
-    """
-    #below might not be best for heartbeat analysis, I think it's used for sentiment w/ NLP, keep for now so can g=check params
-    #below was 1d average pooling
-    print(x.shape)
-    x = tf.keras.layers.Reshape((maxLength, -1, 1))(x)
-    print(x.shape)
-    x = Conv2D(8, kernel_size=(32,1),strides=(8,1),padding="valid")(x)
-    x = tf.keras.layers.Flatten()(x)
-
-    x = layers.Dropout(0.1)(x)
-    x = layers.Dense(20, activation="relu")(x)
-    x = layers.Dropout(0.1)(x)
-    outputs = layers.Dense(2, activation="softmax")(x)
-
-
-    """
+  
 
     model = keras.Model(inputs=inputs, outputs=outputs)
     
