@@ -98,19 +98,8 @@ print(len(filenames))
 print(info_filenames[0])
 df = DataFrame(info_filenames, columns = cols)
 print(df)
-#df["measure_device"] = pd.get_dummies(df.measure_device).values.tolist()
-#print(df)
-#above works but Imputer wants no lists
-
-    
-    
-        
-        
-    
 
 
-
-        
 #okay, we have {} for each person, now we need to add for each file
 
 
@@ -123,43 +112,8 @@ mice_data = mice_imputer.get_params()
 df =pd.DataFrame( mice_imputer.fit_transform(df), columns = cols)
 
 df["base_filename"] = the_filenames_wav
-"""
-f = open("filenameWithOrderDF.txt","w")
-f.write("\n".join(in_order_filenames))
-f.close()
-"""
+
 
 df.to_csv("info_recordings.csv")
-#this isn't working, just retrain on train set (it's not fast and then transform)
-"""
-import json
-#saving with json
-with open("mice_data.txt",'w') as f:
-    f.write(json.dumps(mice_data))
-"""
-#load with json.load(open("file",'r'))
-"""
-with open("mice_data.txt",'r') as f:
-	mice = json.load(f)
-
-"""
-
-
-"""
-imputer:
-
-fit(X[, y])   Fits the imputer on X and return self.
-
-fit_transform(X[, y])    Fits the imputer on X and return the transformed X.
-
-get_params([deep])     Get parameters for this estimator.
-
-set_params(**params)    Set the parameters of this estimator.
-
-transform(X)      Imputes all missing values in X.
-
-"""
-
-
 
 
