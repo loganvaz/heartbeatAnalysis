@@ -25,7 +25,7 @@ for file in df:
     signal, sr = librosa.load(file,sr=22050)
     print(signal)
 
-    exit(0)
+    #exit(0)
     MFCC = librosa.feature.mfcc(signal, sr=sr, n_fft = 2048, hop_length = 512, n_mfcc=13)
     os.chdir(oldDir)
     os.chdir(loc_to)
